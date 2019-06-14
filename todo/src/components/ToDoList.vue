@@ -20,7 +20,10 @@
     </div>
     <div class="col-md-4">
       <div class="card">
-        <TodoCompleted v-bind:completedtasks="completedTasks"/>
+        <TodoCompleted
+          v-bind:completedtasks="completedTasks"
+          v-on:markasnotcompleted="markAsNotCompleted"
+        />
       </div>
     </div>
   </div>
@@ -58,14 +61,7 @@ export default {
           done: false
         }
       ],
-      completedTasks: [
-        {
-          id: 11,
-          title: "Todo Dsdasd",
-          project: "Project D",
-          done: true
-        }
-      ]
+      completedTasks: []
     };
   },
   components: {
@@ -78,8 +74,13 @@ export default {
       this.todolist.push({ id: id, title: task, done: false });
     },
     markAsCompleted: function(taskId) {
-      this.completedTasks.push(_.find(this.todolist, {id: taskId}));
+      this.completedTasks.push(_.find(this.todolist, { id: taskId }));
       _.remove(this.todolist, { id: taskId });
+    },
+    markAsNotCompleted: function(taskId) {
+      this.todolist.push(_.find(this.completedTasks, { id: taskId }));
+      _.remove(this.completedTasks, { id: taskId });
+      console.log(this.completedTasks);
     }
   }
 };
