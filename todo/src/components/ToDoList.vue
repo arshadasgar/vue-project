@@ -1,23 +1,34 @@
 <template>
-  <div>
-    <div class="card">
-      <TodoCreate v-on:add-task-to-list="addTask"/>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <TodoCreate v-on:add-task-to-list="addTask"/>
+      </div>
     </div>
-    <div class="card text-left">
-      <h3>List</h3>
-      <ul>
-        <li v-for="todo in todolist" v-bind:key="todo.id">{{ todo.title }}</li>
-      </ul>
+    <div class="text-left col-md-4">
+      <div class="card">
+        <h3 class="text-center">Pending tasks</h3>
+        <ul>
+          <li v-for="todo in todolist" v-bind:key="todo.id">
+            <span>{{ todo.title }}</span>
+            <span class="btn btn-success" v-on:click="markAsCompleted(todo.id)">
+              <i>✔</i>
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <TodoCompleted v-bind:completed-tasks="completedTasks" />
+    <div class="col-md-4">
+      <div class="card">
+        <TodoCompleted v-bind:completedtasks="completedTasks"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script type = "text/javascript" >
 import TodoCreate from "./TodoCreate";
-import TodoCompleted from './TodoCompleted'
+import TodoCompleted from "./TodoCompleted";
 export default {
   data: function() {
     return {
@@ -65,6 +76,10 @@ export default {
     addTask: function(task) {
       let id = _.last(this.todolist).id + 1;
       this.todolist.push({ id: id, title: task, done: false });
+    },
+    markAsCompleted: function(taskId) {
+      this.completedTasks.push(_.find(this.todolist, {id: taskId}));
+      _.remove(this.todolist, { id: taskId });
     }
   }
 };

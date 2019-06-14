@@ -1,14 +1,14 @@
 <template>
-    <div>
-        <h3>Completed tasks</h3>
+    <div class="text-left">
+        <h3 class="text-center">Completed tasks</h3>
         <ul>
-            <li vi-for="task in completed-tasks" vi-bind:key="task.id">{{ task.name }}</li>
+            <li v-for="task in completedtasks" v-bind:key="task.id">{{ task.title }}</li>
         </ul>
     </div>
 </template>
 <script>
 export default {
     name: "TodoCompleted",
-    props: ['completed-tasks']
+    props: ['completedtasks']
 }
 </script>
