@@ -11,7 +11,7 @@
         <ul>
           <li v-for="todo in todolist" v-bind:key="todo.id">
             <span>{{ todo.title }}</span>
-            <span class="btn btn-success" v-on:click="markAsCompleted(todo.id)">
+            <span class="btn btn-success" v-on:click="markAsCompleted(todo)">
               <i>✔</i>
             </span>
           </li>
@@ -39,25 +39,21 @@ export default {
         {
           id: 1,
           title: "Todo A",
-          project: "Project A",
           done: false
         },
         {
           id: 2,
           title: "Todo B",
-          project: "Project B",
           done: true
         },
         {
           id: 3,
           title: "Todo C",
-          project: "Project C",
           done: false
         },
         {
           id: 4,
           title: "Todo D",
-          project: "Project D",
           done: false
         }
       ],
@@ -70,17 +66,17 @@ export default {
   },
   methods: {
     addTask: function(task) {
-      let id = _.last(this.todolist).id + 1;
+      let id = (!_.isEmpty(this.todolist)) ? _.last(this.todolist).id + 1 : 1;
       this.todolist.push({ id: id, title: task, done: false });
     },
-    markAsCompleted: function(taskId) {
-      this.completedTasks.push(_.find(this.todolist, { id: taskId }));
-      _.remove(this.todolist, { id: taskId });
+    markAsCompleted: function(task) {
+      this.completedTasks.push(task);
+      _.remove(this.todolist, task);
     },
-    markAsNotCompleted: function(taskId) {
-      this.todolist.push(_.find(this.completedTasks, { id: taskId }));
-      _.remove(this.completedTasks, { id: taskId });
-      console.log(this.completedTasks);
+    markAsNotCompleted: function(task) {
+      this.todolist.push(task);
+      _.remove(this.completedTasks, task);
+      this.$forceUpdate();
     }
   }
 };

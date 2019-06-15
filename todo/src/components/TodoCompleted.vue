@@ -4,7 +4,7 @@
     <ul>
       <li v-for="task in completedtasks" v-bind:key="task.id">
         <span>{{ task.title }}</span>
-        <span class="btn btn-success" v-on:click="$emit('markasnotcompleted', task.id)">
+        <span class="btn btn-success" v-on:click="$emit('markasnotcompleted', task)">
           <i>✕</i>
         </span>
       </li>
