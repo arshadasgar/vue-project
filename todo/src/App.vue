@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app_div">
     <TodoList />
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style>
-#app {
+#app_div {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

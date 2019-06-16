@@ -66,17 +66,16 @@ export default {
   },
   methods: {
     addTask: function(task) {
-      let id = (!_.isEmpty(this.todolist)) ? _.last(this.todolist).id + 1 : 1;
+      let id = !_.isEmpty(this.todolist) ? _.last(this.todolist).id + 1 : 1;
       this.todolist.push({ id: id, title: task, done: false });
     },
     markAsCompleted: function(task) {
       this.completedTasks.push(task);
       _.remove(this.todolist, task);
     },
-    markAsNotCompleted: function(task) {
+    markAsNotCompleted: function(task, index) {
       this.todolist.push(task);
-      _.remove(this.completedTasks, task);
-      this.$forceUpdate();
+      this.completedTasks.splice(index, 1);
     }
   }
 };
